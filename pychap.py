@@ -92,14 +92,14 @@ def authenticate(putuser, user):
   assert callable(putuser), \
       'first argument to pychap.authenticate() must be a function'
 
-  assert isinstance(getattr(user, 'username', False), basestring), \
+  assert isinstance(getattr(user, 'username', False), str), \
       'user.username passed to pychap.authenticate() must be a string.'
 
   user.nonce = getattr(user, 'nonce', False) or None
-  assert (isinstance(user.nonce, basestring) or user.nonce is None), \
+  assert (isinstance(user.nonce, str) or user.nonce is None), \
       'user.nonce passed to pychap.authenticate() must be a string or None'
   user.nextnonce = getattr(user, 'nextnonce', False) or None
-  assert (isinstance(user.nextnonce, basestring) or user.nextnonce is None), \
+  assert (isinstance(user.nextnonce, str) or user.nextnonce is None), \
       'nextnonce passed to pychap.authenticate() must be a string or None'
 
 
@@ -115,9 +115,9 @@ def authenticate(putuser, user):
   # no credentials supplied by the client
   user.cnonce = getattr(user, 'cnonce', False) or None
   user.response = getattr(user, 'response', False) or None
-  assert (isinstance(user.cnonce, basestring) or user.cnonce is None), \
+  assert (isinstance(user.cnonce, str) or user.cnonce is None), \
       'user.cnonce passed to pychap.authenticate() must be a string or None'
-  assert (isinstance(user.response, basestring) or user.response is None), \
+  assert (isinstance(user.response, str) or user.response is None), \
       'user.response passed to pychap.authenticate() must be a string or None'
   if user.cnonce is None or user.response is None:
     user.message = MISSING_CREDS 
@@ -126,7 +126,7 @@ def authenticate(putuser, user):
 
   # no stored passkey: setting or re-setting the passkey
   user.passkey = getattr(user, 'passkey', False) or None
-  assert (isinstance(user.passkey, basestring) or user.passkey is None), \
+  assert (isinstance(user.passkey, str) or user.passkey is None), \
       'user.passkey passed to pychap.authenticate() must be a string or None'
   if user.passkey is None:
     user.passkey = user.cnonce
@@ -148,7 +148,7 @@ def authenticate(putuser, user):
     return user
 
   # authenticate
-  assert isinstance(user.passkey, basestring), \
+  assert isinstance(user.passkey, str), \
       'user.passkey passed to pychap.authenticate() should be a string.'
   if hashlib.sha1(user.response).hexdigest() != user.passkey:
     user.authenticated = False
