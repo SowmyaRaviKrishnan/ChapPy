@@ -141,8 +141,8 @@ def authenticate(putuser, user):
   # have to make sure that the client has at least modified nonce and nextnonce
   # into response and cnonce with user's passkey.
   if user.cnonce == hashlib.sha1(
-      hashlib.sha1(user.nextnonce).hexdigest()).hexdigest() \
-          or user.response == hashlib.sha1(user.nonce).hexdigest():
+      hashlib.sha1(user.nextnonce.encode("ascii")).hexdigest().encode("ascii")).hexdigest() \
+          or user.response == hashlib.sha1(user.nonce.encode("ascii")).hexdigest():
     user.authenticated = False
     user.message = UNMODIFIED
     return user
@@ -150,7 +150,7 @@ def authenticate(putuser, user):
   # authenticate
   assert isinstance(user.passkey, str), \
       'user.passkey passed to pychap.authenticate() should be a string.'
-  if hashlib.sha1(user.response).hexdigest() != user.passkey:
+  if hashlib.sha1(user.response.encode("ascii")).hexdigest() != user.passkey:
     user.authenticated = False
     user.message = DENIED
     return user
