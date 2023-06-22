@@ -35,6 +35,9 @@ class CHAPService(rpyc.Service):
         usr = User(peer_username)
         usr.response = response 
         usr.cnonce = cnonce
+        usr.nonce = peerobj.nonce
+        usr.nextnonce = peerobj.nextnonce
+        usr.passkey = peerobj.passkey
         pychap.authenticate(peerobj.save_nonce_nextnonce,usr)
         peerobj.save_nonce_nextnonce(usr)
         return peerobj.nonce,peerobj.nextnonce
