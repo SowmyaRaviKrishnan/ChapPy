@@ -10,7 +10,7 @@ from peer import *
 class CHAPService(rpyc.Service):
     
     @rpyc.exposed
-    def register_user(ip,port,username):
+    def register_user(self,ip,port,username):
         user = User(username)
         peerobj = Node(ip,port,username)
         #register user
@@ -30,7 +30,7 @@ class CHAPService(rpyc.Service):
         return "Sent Request & authenticated succesfully"
 
     @rpyc.exposed
-    def authenticate(peer_username,response,cnonce):
+    def authenticate(self,peer_username,response,cnonce):
         peerobj = peers.get_peers()[peer_username]
         usr = User(peer_username)
         usr.response = response 
