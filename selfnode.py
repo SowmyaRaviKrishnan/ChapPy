@@ -2,13 +2,16 @@
 import hashlib
 
 class SelfNode:
-    def __init__(self,username,passkey,ip,hostname,port):
+    def __init__(self,username,passkey,ip,hostname,port,peers_list):
         self.ip = ip
         self.hostname = hostname
         self.username = username
         self.passkey = passkey
-        self.response = None
-        self.cnonce = None
+        self.response = {}
+        self.cnonce = {}
+        for each in peers_list:
+            self.response[each.username] = None
+            self.cnonce[each.username] = None
         self.port = port
 
     def calculate_response(self,nonce):

@@ -11,7 +11,9 @@ if __name__ == "__main__":
       while True:
             for peer in peers.peers:
                 connection = connect_peer(peers.peers[peer].ip,peers.peers[peer].port)
-                nonce,nextnonce = connection.root.authenticate(current_node.username,current_node.response,current_node.cnonce)
+                response = current_node.response[peers.peers[peer].username]
+                cnonce = current_node.cnonce[peers.peers[peer].username]
+                nonce,nextnonce = connection.root.authenticate(current_node.username,response,cnonce)
                 current_node.calculate_response(nonce)
                 current_node.calculate_cnonce(nextnonce)
             sleep(10)

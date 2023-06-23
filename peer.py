@@ -14,14 +14,10 @@ class Node:
         self.passkey = user.passkey
 
 class Peers:
-    def __init__(self):
+    def __init__(self,peers_list):
         self.peers = {}
-        r1 = Node("10.0.0.1",118811,"r1")
-        r2 = Node("10.0.0.2",118811,"r2")
-        r2 = Node("10.0.1.1",118811,"r2")
-        r3 = Node("10.0.1.2",118811,"r3")
-        self.add_peer("r1",r1)
-        self.add_peer("r3",r3)
+        for each in peers_list:
+            self.add_peer(each.username,each)
 
     def add_peer(self,username,node):
         self.peers[username] = node
