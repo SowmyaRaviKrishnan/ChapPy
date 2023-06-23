@@ -8,7 +8,7 @@ class Node:
         self.passkey = None
 
     def save_nonce_nextnonce(self,user):
-        print(user.message)
+        print("Authentication Status for Peer :"+self.username+" "+user.message)
         self.nonce = user.nonce
         self.nextnonce = user.nextnonce
         self.passkey = user.passkey

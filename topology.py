@@ -29,14 +29,14 @@ class NetworkTopo( Topo ):
     """
     def build( self, **_opts ):
 		
-        h1=self.addHost("h1")
+        h1=self.addHost("h1", ip= '10.0.2.3')
         r1=self.addNode("r1",cls=LinuxRouter,ip=None)
         r2=self.addNode("r2",cls=LinuxRouter,ip=None)
         r3=self.addNode("r3",cls=LinuxRouter,ip=None)
         r4=self.addNode("r4",cls=LinuxRouter,ip=None)
-        self.addLink(r1,r2,params1={ 'ip' : '10.0.0.3/24' },params2={ 'ip' : '10.0.0.2/24' })
+        self.addLink(r1,r2,params1={ 'ip' : '10.0.0.1/24' },params2={ 'ip' : '10.0.0.2/24' })
         self.addLink(r2,r3,params1={ 'ip' : '10.0.1.1/24' },params2={ 'ip' : '10.0.1.2/24' })
-        self.addLink(r4,h1,intfName1="r4-eth0",intfName2="r4-eth1",params1={ 'ip' : '10.0.0.4' })
+        self.addLink(r3,r4,params1={ 'ip' : '10.0.2.1/24' },params2={ 'ip' : '10.0.2.2/24' })
 topo = NetworkTopo()
 net = Mininet( topo=topo )
 net.start()
@@ -44,9 +44,18 @@ net.start()
 #ip route add ipA via ipB dev INTERFACE
 #every packet going to ipA must first go to ipB using INTERFACE
 net["r1"].cmd("ip route add 10.0.1.2 via 10.0.0.2 dev r1-eth0")
-net["r3"].cmd("ip route add 10.0.0.3 via 10.0.1.1 dev r3-eth0")
+net["r3"].cmd("ip route add 10.0.0.1 via 10.0.1.1 dev r3-eth0")
 #this command is just to r3 ping r2 work, because it will use the correct ip
 net["r3"].cmd("ip route add 10.0.0.2 via 10.0.1.1 dev r3-eth0")
+net["r4"].cmd("ip route add 10.0.0.1 via 10.0.2.1 dev r4-eth0")
+net["r4"].cmd("ip route add 10.0.0.2 via 10.0.2.1 dev r4-eth0")
+net["r4"].cmd("ip route add 10.0.1.1 via 10.0.2.1 dev r4-eth0")
+net["r4"].cmd("ip route add 10.0.1.2 via 10.0.2.1 dev r4-eth0")
+
+net["r1"].cmd("ip route add 10.0.2.2 via 10.0.0.2 dev r1-eth0")
+net["r2"].cmd("ip route add 10.0.2.2 via 10.0.1.2 dev r2-eth1")
+
+
 net.pingAll()
 CLI( net )
 net.stop()

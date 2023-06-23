@@ -15,12 +15,10 @@ class CHAPService(rpyc.Service):
         peerobj = Node(ip,port,username)
         #register user
         pychap.authenticate(peerobj.save_nonce_nextnonce,user)
-        peerobj.save_nonce_nextnonce(user)
-        
+
         #save nonce nextnonce
         pychap.authenticate(peerobj.save_nonce_nextnonce,user)
-        peerobj.save_nonce_nextnonce(user)
-    
+        
     @rpyc.exposed
     def send_authenticate_request(self,server_ip,server_port):
         connection = connect_peer(server_ip,server_port)
@@ -39,7 +37,6 @@ class CHAPService(rpyc.Service):
         usr.nextnonce = peerobj.nextnonce
         usr.passkey = peerobj.passkey
         pychap.authenticate(peerobj.save_nonce_nextnonce,usr)
-        peerobj.save_nonce_nextnonce(usr)
         return peerobj.nonce,peerobj.nextnonce
         
 
