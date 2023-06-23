@@ -14,8 +14,8 @@ if __name__ == "__main__":
                 response = current_node.response[peers.peers[peer].username]
                 cnonce = current_node.cnonce[peers.peers[peer].username]
                 nonce,nextnonce = connection.root.authenticate(current_node.username,response,cnonce)
-                current_node.calculate_response(nonce)
-                current_node.calculate_cnonce(nextnonce)
+                current_node.calculate_response(peers.peers[peer].username,nonce)
+                current_node.calculate_cnonce(peers.peers[peer].username,nextnonce)
             sleep(10)
             
 
