@@ -5,10 +5,11 @@ from peer import *
 r1 = Node("10.0.0.1",118811,"r1")
 r1_r2 = Node("10.0.0.2",118811,"r2")
 r3_r2 = Node("10.0.1.1",118811,"r2")
-r3 = Node("10.0.1.2",118811,"r3")
+r2_r3 = Node("10.0.1.2",118811,"r3")
+r4_r3 = Node("10.0.2.1",118811,"r3")
 r4 = Node("10.0.2.2",118811,"r4")
 
-peers_list = [r1,r1_r2,r3_r2,r3]
+peers_list = [r1,r1_r2,r3_r2]
 
 
 r2_self = SelfNode("r2","r2password","10.0.0.2","r2",118811,peers_list)

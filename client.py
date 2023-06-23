@@ -13,7 +13,7 @@ if __name__ == "__main__":
                 connection = connect_peer(peers.peers[peer].ip,peers.peers[peer].port)
                 response = current_node.response[peers.peers[peer].username]
                 cnonce = current_node.cnonce[peers.peers[peer].username]
-                nonce,nextnonce = connection.root.authenticate(current_node.username,response,cnonce)
+                nonce,nextnonce,_ = connection.root.authenticate(current_node.username,response,cnonce)
                 current_node.calculate_response(peers.peers[peer].username,nonce)
                 current_node.calculate_cnonce(peers.peers[peer].username,nextnonce)
             sleep(10)

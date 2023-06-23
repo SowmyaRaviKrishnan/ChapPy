@@ -16,9 +16,10 @@ if __name__ == "__main__":
                 response = current_node.response[peers.peers[peer].username]
                 cnonce = current_node.cnonce[peers.peers[peer].username]
                 if counter == 5:
-                    connection.root.authenticate("r1",response,cnonce)
+                    nonce,nextnonce,message = connection.root.authenticate("r1",response,cnonce)
+                    print("Authentication Status for Peer :"+current_node.username+" "+message)
                     break
-                nonce,nextnonce = connection.root.authenticate(current_node.username,response,cnonce)
+                nonce,nextnonce,_ = connection.root.authenticate(current_node.username,response,cnonce)
                 current_node.calculate_response(peers.peers[peer].username,nonce)
                 current_node.calculate_cnonce(peers.peers[peer].username,nextnonce)
             if counter == 5:
